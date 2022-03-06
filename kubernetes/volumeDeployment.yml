@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volume-user-pod
+  namespace: volume-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volume-user-container
+  template:
+    metadata:
+      labels:
+        app: volume-user-container
+    spec:
+      containers:
+      - name: volume-reader-container
+        image: volume-reader:1.1
+        volumeMounts:
+          - name:  text-file-volume
+            mountPath: /app
+      - name: volume-writer-container
+        image: volume-writer:1.1
+        volumeMounts:
+          - name:  text-file-volume
+            mountPath: /app
+      volumes:
+        - name: text-file-volume
+          emptyDir: {}

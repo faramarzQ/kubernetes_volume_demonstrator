@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: volume-user-clusterip
+  namespace: volume-namespace
+  labels:
+    app: volume-user-service
+spec:
+  selector:
+    app: volume-user-container
+  type: NodePort
+  ports:
+  - name: volume-reader-port
+    port: 8090
+    targetPort: 8090
+  - name: volume-writer-port
+    port: 8091
+    targetPort: 8091
